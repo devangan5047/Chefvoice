@@ -4,11 +4,9 @@ from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 
-# 🔑 Replace with your actual keys
-API_KEY = "AIzaSyCEKDo2egDI3EWjgHDDcMtR4qKk-dTMPWI"
-CX_ID = "6770fc55e14744bab"
+API_KEY = "your-google-cloud-console-api-key"
+CX_ID = "your-custom-search-api"
 
-# ✅ Step 1: Google Search via CSE
 def search_recipe(dish_name):
     url = "https://www.googleapis.com/customsearch/v1"
     params = {
@@ -48,13 +46,11 @@ def get_recipe():
     else:
         return jsonify({"error": "No recipe found"}), 404
 
-# ✅ Step 2: Scrape the recipe page
 def scrape_recipe(url):
     try:
         res = requests.get(url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
         soup = BeautifulSoup(res.content, "lxml")
 
-        # Ingredients extraction (loose matching)
         ingredients = []
         for tag in soup.find_all(["li", "span"]):
             classes = " ".join(tag.get("class", []))
@@ -63,7 +59,6 @@ def scrape_recipe(url):
                 if text and text not in ingredients:
                     ingredients.append(text)
 
-        # Instructions extraction (loose matching)
         instructions = []
         for tag in soup.find_all(["li", "p"]):
             classes = " ".join(tag.get("class", []))
@@ -72,7 +67,6 @@ def scrape_recipe(url):
                 if step and step not in instructions:
                     instructions.append(step)
 
-        # Fallback: use <p> with long enough text
         if not instructions:
             instructions = [
                 p.get_text(strip=True) for p in soup.find_all("p")
