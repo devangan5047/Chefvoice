@@ -1,0 +1,5 @@
+<script async src="https://cse.google.com/cse.js?cx=6770fc55e14744bab">
+</script>
+<div class="gcse-search"></div>
+
+cx = 6770fc55e14744bab
