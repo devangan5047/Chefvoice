@@ -1,5 +1,7 @@
-flask
-requests
-pyttsx3
+Flask 
+google-generativeai
 SpeechRecognition
-pyaudio
+gTTS
+playsound
+PyAudio
+pygame
